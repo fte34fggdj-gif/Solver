@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#155eef">
+  <meta name="description" content="ارفع ورقة الأسئلة واحصل على إجابات مشروحة خطوة بخطوة باستخدام الذكاء الاصطناعي.">
+  <title>Omar AI Solver | حل ورقة الأسئلة</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Omar AI Solver">
+      <span class="brand-mark">O</span>
+      <span><strong>Omar AI</strong><small>ورقتك.. حلّها وافهمها</small></span>
+    </a>
+    <span class="top-pill"><span class="status-dot"></span> مساعدك الدراسي الذكي</span>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-badge"><span>✦</span> تعلّم بذكاء، مش بالحفظ بس</div>
+      <h1>ورقة الأسئلة صعبة؟<br><span>خلّي الذكاء الاصطناعي يشرحها.</span></h1>
+      <p>ارفع صورة الورقة، وسيتم تحليل الأسئلة وحلّها مع شرح واضح لكل إجابة، في مختلف المواد الدراسية.</p>
+      <div class="feature-row">
+        <span>✓ شرح خطوة بخطوة</span><span>✓ مواد دراسية متعددة</span><span>✓ نسخ وطباعة الحل</span>
+      </div>
+    </section>
+
+    <section class="workspace" aria-label="حل ورقة الأسئلة">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">ابدأ من هنا</span>
+          <h2>ارفع ورقة الأسئلة</h2>
+        </div>
+        <span class="step-label"><b>1</b> ارفع <i>—</i> <b>2</b> حلّل <i>—</i> <b>3</b> افهم</span>
+      </div>
+
+      <form id="solve-form">
+        <label class="dropzone" id="dropzone" for="image-input">
+          <input id="image-input" type="file" accept="image/png,image/jpeg,image/webp,image/gif">
+          <span class="upload-icon" aria-hidden="true">↑</span>
+          <strong>اضغط لاختيار صورة الورقة</strong>
+          <span class="drop-copy">أو اسحب الصورة وأفلتها هنا</span>
+          <span class="file-hint">PNG أو JPG أو WEBP — بحد أقصى 8 ميجابايت</span>
+          <span class="choose-button">اختيار صورة</span>
+        </label>
+
+        <div id="preview-wrap" class="preview-wrap hidden">
+          <div class="preview-title"><strong>الصورة المختارة</strong><button id="remove-image" class="text-button" type="button">إزالة الصورة</button></div>
+          <img id="preview" alt="معاينة صورة ورقة الأسئلة">
+          <p id="file-name" class="file-name"></p>
+        </div>
+
+        <div class="options-grid">
+          <div class="field">
+            <label for="subject">المادة الدراسية</label>
+            <select id="subject">
+              <option value="auto">تحديد المادة تلقائيًا</option>
+              <option>الرياضيات</option><option>العلوم</option><option>الفيزياء</option>
+              <option>الكيمياء</option><option>الأحياء</option><option>اللغة العربية</option>
+              <option>اللغة الإنجليزية</option><option>التاريخ</option><option>الجغرافيا</option>
+              <option>الفلسفة والمنطق</option><option>الحاسب الآلي</option><option>مادة أخرى</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="explanation">مستوى الشرح</label>
+            <select id="explanation">
+              <option value="detailed">شرح واضح ومفصل</option>
+              <option value="step">خطوة بخطوة بالتفصيل</option>
+              <option value="brief">شرح مختصر</option>
+            </select>
+          </div>
+        </div>
+
+        <button id="solve-button" class="primary-button" type="submit">
+          <span>✦</span><span id="button-text">حل الورقة واشرح الإجابات</span><span class="button-arrow">←</span>
+        </button>
+        <p class="privacy-note">🔒 تُرسل الصورة إلى خدمة الذكاء الاصطناعي لمعالجتها، فلا ترفع بيانات شخصية أو مستندات حساسة.</p>
+      </form>
+    </section>
+
+    <section id="result-section" class="result-section hidden" aria-live="polite">
+      <div class="result-heading">
+        <div><span class="eyebrow">النتيجة</span><h2>حل ورقة الأسئلة</h2></div>
+        <div class="result-actions"><button id="copy-button" class="secondary-button" type="button">نسخ الحل</button><button id="print-button" class="secondary-button" type="button">طباعة</button></div>
+      </div>
+      <div id="loading" class="loading hidden"><span class="spinner"></span><div><strong>بنقرأ الورقة ونحل الأسئلة...</strong><p>قد يستغرق ذلك بعض الوقت حسب الصورة وعدد الأسئلة.</p></div></div>
+      <div id="error-box" class="error-box hidden" role="alert"></div>
+      <article id="answer" class="answer markdown-content"></article>
+      <p class="disclaimer">راجع الإجابات مع كتابك أو معلمك؛ قد يخطئ الذكاء الاصطناعي، خاصةً إذا كانت الصورة غير واضحة.</p>
+    </section>
+
+    <section class="how-section">
+      <div class="section-heading"><div><span class="eyebrow">ببساطة</span><h2>إزاي تستخدم الموقع؟</h2></div></div>
+      <div class="how-grid">
+        <div class="how-card"><span class="how-number">01</span><h3>صوّر الورقة</h3><p>خلّي الأسئلة ظاهرة وواضحة وفي إضاءة جيدة.</p></div>
+        <div class="how-card"><span class="how-number">02</span><h3>اختار طريقة الشرح</h3><p>حدد المادة إن أحببت، واختار مستوى التفصيل المناسب لك.</p></div>
+        <div class="how-card"><span class="how-number">03</span><h3>افهم الإجابات</h3><p>اقرأ الشرح، وانسخه أو اطبعه للمراجعة.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-brand"><span class="brand-mark">O</span><strong>Omar AI Solver</strong></div>
+    <p>مساعدك في الفهم والتعلّم</p>
+    <div class="footer-line"></div>
+    <small>© <span id="year"></span> All Rights Reserved</small>
+    <strong class="credit">Developed by Omar Saeed</strong>
+  </footer>
+  <script src="/app.js" defer></script>
+</body>
+</html>
